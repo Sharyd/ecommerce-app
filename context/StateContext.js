@@ -47,16 +47,15 @@ export const StateContext = ({ children }) => {
   const toggleCartItemQuantity = (id, value) => {
     foundProduct = cartItems.find(item => item._id === id);
     index = cartItems.findIndex(product => product._id === id);
-    const newCartItems = cartItems.filter(item => item._id !== id);
 
+    console.log(id);
     const { quantity, price } = foundProduct;
     if (value === 'inc') {
       setCartItems(prevCartItems =>
         prevCartItems.map(item => {
-          if (item._id === id) {
-            return { ...item, quantity: foundProduct.quantity + 1 };
-          }
-          return item;
+          return item._id === id
+            ? { ...item, quantity: foundProduct.quantity + 1 }
+            : item;
         })
       );
 
@@ -66,10 +65,9 @@ export const StateContext = ({ children }) => {
       if (quantity > 1) {
         setCartItems(prevCartItems =>
           prevCartItems.map(item => {
-            if (item._id === id) {
-              return { ...item, quantity: foundProduct.quantity - 1 };
-            }
-            return item;
+            return item._id === id
+              ? { ...item, quantity: foundProduct.quantity - 1 }
+              : item;
           })
         );
 

@@ -1,16 +1,16 @@
-import React, { useRef } from "react";
-import Link from "next/link";
+import React, { useRef } from 'react';
+import Link from 'next/link';
 import {
   AiOutlineMinus,
   AiOutlinePlus,
   AiOutlineLeft,
   AiOutlineShopping,
-} from "react-icons/ai";
-import { TiDeleteOutline } from "react-icons/ti";
-import { toast } from "react-hot-toast";
-import { useStateContext } from "../context/StateContext";
-import { urlFor } from "../lib/client";
-import getStripe from "../lib/getStripe";
+} from 'react-icons/ai';
+import { TiDeleteOutline } from 'react-icons/ti';
+import { toast } from 'react-hot-toast';
+import { useStateContext } from '../context/StateContext';
+import { urlFor } from '../lib/client';
+import getStripe from '../lib/getStripe';
 const Cart = () => {
   const cartRef = useRef();
   const {
@@ -24,17 +24,17 @@ const Cart = () => {
   const handleCheckout = async () => {
     const stripe = await getStripe();
 
-    const response = await fetch("/api/stripe", {
-      method: "POST",
+    const response = await fetch('/api/stripe', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(cartItems),
     });
     if (response.statusCode === 500) return;
     const data = await response.json();
 
-    toast.loading("Redirecting..");
+    toast.loading('Redirecting..');
 
     stripe.redirectToCheckout({ sessionId: data.id });
   };
@@ -70,8 +70,8 @@ const Cart = () => {
         )}
         <div className="product-container">
           {cartItems.length >= 1 &&
-            cartItems.map((item) => (
-              <div key={item._id} className="product">
+            cartItems.map(item => (
+              <div key={item?._id} className="product">
                 <img
                   src={urlFor(item?.image[0])}
                   className="cart-product-image"
@@ -87,7 +87,7 @@ const Cart = () => {
                         <span
                           className="minus"
                           onClick={() =>
-                            toggleCartItemQuantity(item._id, "dec")
+                            toggleCartItemQuantity(item._id, 'dec')
                           }
                         >
                           <AiOutlineMinus />
@@ -96,7 +96,7 @@ const Cart = () => {
                         <span
                           className="plus"
                           onClick={() =>
-                            toggleCartItemQuantity(item._id, "inc")
+                            toggleCartItemQuantity(item._id, 'inc')
                           }
                         >
                           <AiOutlinePlus />
